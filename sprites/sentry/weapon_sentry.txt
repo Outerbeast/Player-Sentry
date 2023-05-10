@@ -1,0 +1,4 @@
+6
+weapon			640		sentry/weapon_sentry	0	0	170	45
+weapon_s			640		sentry/weapon_sentry	0	45	170	45
+ammo				640		sentry/weapon_sentry	0	91	24	24
