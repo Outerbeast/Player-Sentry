@@ -18,7 +18,7 @@ OR
 ## weapon_sentry
 This script also allows you to use a disposable sentry via weapon_sentry. You should be familiar with weapon_tripmine already - this weapon is used just like that. You can build as many sentries so long as you can get ammo for the weapon_sentry. It will not cost armour to build, though the base health of the sentry will remain at 80 HP.
 To enable, you need to create your own map script file and then register the weapon in MapInit, using the this function
-`bool WeaponRegister(string strViewMdl = "", string strWorldMdl = "", string strPlayerMdl = "")`
+```bool WeaponRegister(string strViewMdl = "", string strWorldMdl = "", string strPlayerMdl = "")```
 This is done as follows:-
 ```
 #include "player_sentry"
@@ -68,6 +68,7 @@ weapon_sentry supports several keyvalues and flags to customise the weapon.
 Load `weapon_sentry.fgd` into your map editor of choice so you are able to add weapon_sentry entities into your map.
 
 These standard weapon keys and flags are usable, which you should already be familiar with. For further information visit https://wiki.svencoop.com/Weapons#Keyvalues
+
 Keys
 - `movetype`
 - `wpn_v_model`
