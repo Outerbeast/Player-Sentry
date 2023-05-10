@@ -1,3 +1,6 @@
+# Player Sentry
+Build your very own sentry gun using your pipewrench, or build a disposable sentry using weapon_sentry
+
 # Installation
 To install download the package from the "Releases" section on the right and extract into svencoop_addon
 
