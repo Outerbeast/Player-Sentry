@@ -92,11 +92,11 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
 
         BaseClass.Spawn();
     }
-
-    int PrimaryAmmoIndex()
+    // !-BUG-!: This method was causing trouble with changing weapons
+/*     int PrimaryAmmoIndex()
     {
         return 1;
-    }
+    } */
 
     string pszName()
     {

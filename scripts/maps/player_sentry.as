@@ -6,6 +6,7 @@
 #include "player_sentry/constants"
 #include "player_sentry/callbacks"
 #include "player_sentry/cvars"
+//#include "player_sentry/upgrade"
 #include "player_sentry/weapon"
 
 namespace PLAYER_SENTRY
@@ -376,7 +377,7 @@ uint BuildSentry(EHandle hPlayer)
     else
         pSentry.pev.max_health = pSentry.pev.health *= ( flSentryHealthMultiplier > 0.0f ? flSentryHealthMultiplier : 1.0f );
 
-    pSentry.m_FormattedName =  strDisplayName != "" ? "" + pPlayer.pev.netname + "'s " + strDisplayName : "Ally Sentry Turret";
+    pSentry.m_FormattedName = strDisplayName != "" ? "" + pPlayer.pev.netname + "'s " + strDisplayName : "Ally Sentry Turret";
     pSentry.pev.targetname = "player_sentry_PID" + pPlayer.entindex() + "_EID" + pSentry.entindex();
     pSentry.m_iTriggerCondition = 4;
     pSentry.m_iszTriggerTarget = "player_sentry_killed";
