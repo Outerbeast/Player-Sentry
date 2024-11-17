@@ -1,3 +1,7 @@
+# Player Sentry
+Build your very own sentry gun using your pipewrench, or build a disposable sentry using weapon_sentry
+
+[Demo](https://user.boderman.net/outerbeast/Player_Sentry_Demo.mp4)
 # Installation
 To install, [download](https://github.com/Outerbeast/Player-Sentry/archive/refs/heads/main.zip) extract into `svencoop_addon` or your own map's folder.
 
