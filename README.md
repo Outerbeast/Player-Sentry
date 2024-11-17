@@ -1,5 +1,5 @@
 # Installation
-To install, [download](https://github.com/Outerbeast/Player-Sentry/archive/refs/heads/main.zip) extract into svencoop_addon
+To install, [download](https://github.com/Outerbeast/Player-Sentry/archive/refs/heads/main.zip) extract into `svencoop_addon` or your own map's folder.
 
 - Add this cvar in your map cfg: `map_script player_sentry`
 OR
