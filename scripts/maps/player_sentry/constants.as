@@ -18,20 +18,28 @@ enum sentrydestroyed_states
     Owner_Disconnect
 };
 
-enum sentryweapon_anims
-{
-    SENTRY_IDLE = 0,
-    SENTRY_FIDGET,
-    SENTRY_DRAW,
-    SENTRY_DROP
-};
-
 enum sentryweapon_mdlidx
 {
     MDL_VIEW = 0,
     MDL_WORLD,
     MDL_PLAYER,
     SPR_HUD
+};
+
+enum ANIM_SENTRY
+{
+    IDLE,
+    FIDGET,
+    DRAW,
+    DROP
+};
+
+const array<float> FL_ANIMTIME_SENTRY =
+{
+    5.05f,
+    2.03f,
+    2.03f,
+    0.53f
 };
 
 string

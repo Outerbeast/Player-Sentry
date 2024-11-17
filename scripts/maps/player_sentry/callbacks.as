@@ -111,8 +111,6 @@ bool SetSentryCallback(int iEventType, ref@ fn)
             return false;
         }
     }
-
-    return false;
 }
 
 void RemoveSentryCallback(int iEventType, ref@ fn)

@@ -33,7 +33,7 @@ bool WeaponRegister(string strViewMdl = "", string strWorldMdl = "", string strP
 // Class is not final and all members are public for use as baseclass for a constructing a more derived sentryweapon type
 class CSentryWeapon : ScriptBasePlayerWeaponEntity
 {
-    float m_flAttackRange, flPlaceDelay = 0.53f;// Used by weapon_sentry for delay between primary attack and sentry placement
+    float m_flAttackRange, flPlaceDelay = FL_ANIMTIME_SENTRY[ANIM_SENTRY::DROP];// Used by weapon_sentry for delay between primary attack and sentry placement
     string m_strDisplayName;
     CScheduledFunction@ fnPlaceSentry;
 
@@ -92,11 +92,6 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
 
         BaseClass.Spawn();
     }
-    // !-BUG-!: This method was causing trouble with changing weapons
-/*     int PrimaryAmmoIndex()
-    {
-        return 1;
-    } */
 
     string pszName()
     {
@@ -139,7 +134,20 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
 
     bool Deploy()
     {
-        return self.DefaultDeploy( self.GetV_Model( SENTRY_WEAPON_MDLS[MDL_VIEW] ), self.GetP_Model( SENTRY_WEAPON_MDLS[MDL_PLAYER] ), SENTRY_DRAW, "trip" );
+        const bool blDeployed = self.DefaultDeploy( self.GetV_Model( SENTRY_WEAPON_MDLS[MDL_VIEW] ), self.GetP_Model( SENTRY_WEAPON_MDLS[MDL_PLAYER] ), ANIM_SENTRY::DRAW, "trip" );
+        self.m_flTimeWeaponIdle = self.m_flNextPrimaryAttack = self.m_flNextSecondaryAttack = g_Engine.time + FL_ANIMTIME_SENTRY[ANIM_SENTRY::DRAW];
+
+        return blDeployed;
+    }
+
+    void WeaponIdle()
+    {
+        if( self.m_flTimeWeaponIdle > g_Engine.time )
+            return;
+
+        ANIM_SENTRY AnimIdle = g_PlayerFuncs.SharedRandomFloat( m_pPlayer.random_seed, 0, 1 ) <= 0.25f ? ANIM_SENTRY::FIDGET : ANIM_SENTRY::IDLE;
+        self.SendWeaponAnim( AnimIdle );
+        self.m_flTimeWeaponIdle = g_Engine.time + FL_ANIMTIME_SENTRY[AnimIdle];
     }
 
     bool IsEmpty()
@@ -153,12 +161,6 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
             return;
 
         m_pPlayer.m_rgAmmo( self.m_iPrimaryAmmoType, m_pPlayer.m_rgAmmo( self.m_iPrimaryAmmoType ) - iAmmoAmt );
-    }
-
-    void Holster(int skipLocal = 0)
-    {
-        m_pPlayer.m_flNextAttack = g_Engine.time + 0.5f;
-        BaseClass.Holster( skipLocal );
     }
 
     void PlaceSentry()
@@ -194,23 +196,6 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
         }
     }
 
-    void WeaponIdle()
-    {
-        if( self.m_flTimeWeaponIdle > g_Engine.time )
-            return;
-
-        if( g_PlayerFuncs.SharedRandomFloat( m_pPlayer.random_seed, 0, 1 ) <= 0.25f )
-        {
-            self.SendWeaponAnim( SENTRY_FIDGET );
-            self.m_flTimeWeaponIdle = g_Engine.time + 2.0f;
-        }
-        else
-        {
-            self.SendWeaponAnim( SENTRY_IDLE );
-            self.m_flTimeWeaponIdle = g_Engine.time + 5.1f;
-        }
-    }
-
     void PrimaryAttack()
     {
         if( IsEmpty() )
@@ -218,8 +203,14 @@ class CSentryWeapon : ScriptBasePlayerWeaponEntity
 
         @fnPlaceSentry = g_Scheduler.SetTimeout( this, "PlaceSentry", flPlaceDelay );
         m_pPlayer.SetAnimation( PLAYER_ATTACK1 );
-        self.SendWeaponAnim( SENTRY_DROP );
+        self.SendWeaponAnim( ANIM_SENTRY::DROP );
         self.m_flNextPrimaryAttack = g_Engine.time + flPlaceDelay;
+    }
+
+    void Holster(int skipLocal = 0)
+    {
+        m_pPlayer.m_flNextAttack = g_Engine.time + 0.5f;
+        BaseClass.Holster( skipLocal );
     }
 
     void UpdateOnRemove()

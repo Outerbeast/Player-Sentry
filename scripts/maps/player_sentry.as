@@ -6,7 +6,6 @@
 #include "player_sentry/constants"
 #include "player_sentry/callbacks"
 #include "player_sentry/cvars"
-//#include "player_sentry/upgrade"
 #include "player_sentry/weapon"
 
 namespace PLAYER_SENTRY
